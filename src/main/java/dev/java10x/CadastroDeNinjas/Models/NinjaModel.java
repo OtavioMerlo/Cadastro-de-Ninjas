@@ -1,12 +1,10 @@
-package dev.java10x.CadastroDeNinjas.Ninjas;
+package dev.java10x.CadastroDeNinjas.Models;
 
-import dev.java10x.CadastroDeNinjas.Missoes.MissoesModel;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Table(name = "tb_cadastro")
@@ -19,15 +17,13 @@ public class NinjaModel {
     private Long id;
 
     private String nome;
-
     private String email;
-
-    int idade;
-    // @ManyToOne um ninja tem uma unica missão. Varios Para Um
+    private int idade;
 
     @ManyToOne
-    @JoinColumn(name = "missoes_id")// Foreing Key Chave estrangeira (Ou seja pegar uma coluna com a outra)
+    @JoinColumn(name = "missoes_id")
+    @JsonIgnoreProperties("ninjas")  // Agora bate com o nome em MissoesModel
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true) // ⬅️ Permite receber apenas o ID
     private MissoesModel missoes;
-
-
 }

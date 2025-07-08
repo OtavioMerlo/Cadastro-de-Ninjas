@@ -1,7 +1,7 @@
-package dev.java10x.CadastroDeNinjas.Missoes;
+package dev.java10x.CadastroDeNinjas.Models;
 
 
-import dev.java10x.CadastroDeNinjas.Ninjas.NinjaModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +18,11 @@ public class MissoesModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
-    private String dificuladae;
-    // UMA MISSAO PARA VARIOS NINJAS. UM PARA VARIOS
+    private String dificuldade;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "missoes")
-    private List<NinjaModel> ninja;
+    private List<NinjaModel> ninjas;  // Mudei para "ninjas" (plural padrão)
 }
